@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SubscribeForm from "./components/SubscribeForm";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -12,7 +13,7 @@ function App() {
     console.log("Keyword:", keyword);
 
     try {
-      const response = await fetch("http://localhost/search.php", {
+      const response = await fetch("http://localhost/jobSearchApp/search.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,6 +24,25 @@ function App() {
       const data = await response.json();
 
       setSearchResult(data.message);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleSubscribe = async (email) => {
+    try {
+      // Send the email address to the backend
+      const response = await fetch("http://localhost/jobSearchApp/subscribe.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      // Handle response from the backend
+      const data = await response.json();
+      console.log(data); // Log response for debugging
     } catch (error) {
       console.error("Error:", error);
     }
@@ -55,6 +75,9 @@ function App() {
         <button type="submit">Search</button>
       </form>
       <p>{searchResult}</p>
+
+      <h2>Subscribe to Notifications</h2>
+      <SubscribeForm onSubmit={handleSubscribe} />
     </div>
   );
 }
