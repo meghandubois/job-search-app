@@ -5,8 +5,10 @@ function App() {
   const [url, setUrl] = useState("");
   const [keyword, setKeyword] = useState("");
   const [searchResult, setSearchResult] = useState("");
+  const [searchCount, setSearchCount] = useState(null); // New state for count
 
   const handleSubmit = async (event) => {
+    console.log("its working");
     event.preventDefault();
 
     console.log("URL:", url);
@@ -24,6 +26,7 @@ function App() {
       const data = await response.json();
 
       setSearchResult(data.message);
+      setSearchCount(data.count); // Set the count received from the backend
     } catch (error) {
       console.error("Error:", error);
     }
@@ -32,13 +35,16 @@ function App() {
   const handleSubscribe = async (email) => {
     try {
       // Send the email address to the backend
-      const response = await fetch("http://localhost/jobSearchApp/subscribe.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        "http://localhost/jobSearchApp/subscribe.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       // Handle response from the backend
       const data = await response.json();
