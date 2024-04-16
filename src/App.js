@@ -5,7 +5,7 @@ function App() {
   const [url, setUrl] = useState("");
   const [keyword, setKeyword] = useState("");
   const [searchResult, setSearchResult] = useState("");
-  const [searchCount, setSearchCount] = useState(null); // New state for count
+  const [setSearchCount] = useState(null); // New state for count
 
   const handleSubmit = async (event) => {
     console.log("its working");
